@@ -1,22 +1,22 @@
 <script>
     import { Router, Link, Route } from "svelte-routing";
-    import Menu from "./routes/Menu.svelte";
-    import Sobre from "./routes/Sobre.svelte";
     import Jogar from "./routes/Jogar.svelte";
+    import Sobre from "./routes/Sobre.svelte";
+    import Ajuda from "./routes/Ajuda.svelte";
   
     export let url = "";
   </script>
   
   <Router url="{url}">
     <nav>
-      <Link to="/">Menu</Link>
+      <Link to="/">Jogar</Link>
       <Link to="sobre">Sobre</Link>
-      <Link to="jogar">Jogar</Link>
+      <Link to="ajuda">Ajuda</Link>
     </nav>
     <div>
-      <Route path="/" component="{Menu}" />
-      <Route path="jogar" component="{Jogar}" />
+      <Route path="/" component="{Jogar}" />
       <Route path="sobre" component="{Sobre}" />
-      <Route path="/"><Menu /></Route>
+      <Route path="ajuda" component="{Ajuda}" />
+      <Route path="/"><Jogar /></Route>
     </div>
   </Router>
