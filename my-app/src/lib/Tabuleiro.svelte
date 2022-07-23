@@ -1,33 +1,11 @@
-<script context="module">
+<script>
+    import {Item, montadora} from './Fabrica.svelte';
 
-    class Tabuleiro{
-        constructor (altura, largura){
-            this.altura = altura;
-            this.largura = largura;
-        }
-    }
+    var corClara = 'rgba(98, 49, 11, 1)'
+    var corEscura = 'rgba(237, 180, 136, 1)';
 
-    let corBranca = 'white';
-    let corPreta = 'black';
-
-    const propriedadesTabuleiro = new Tabuleiro (8, 8);
-    var tabuleiro = montarTabuleiro (propriedadesTabuleiro);
-
-    export function montarTabuleiro (propriedadesTabuleiro){
-
-        let tabuleiroCriado = Array(propriedadesTabuleiro.largura).fill().map(()=>Array(propriedadesTabuleiro.altura).fill());
-
-        for (let i = 0; i < propriedadesTabuleiro.altura; i++){
-            for (let j = 0; j < propriedadesTabuleiro.largura; j++){
-                if (i % 2 == 0) {
-                    j % 2 == 0 ? tabuleiroCriado[i][j] = true : tabuleiroCriado[i][j] = false;
-                    continue;
-                }
-                j % 2 == 1 ? tabuleiroCriado[i][j] = true : tabuleiroCriado[i][j] = false;
-            }
-        }
-        return tabuleiroCriado;
-    }
+    const propriedadesTabuleiro = new Item (8, 8);
+    var tabuleiro = montadora (propriedadesTabuleiro);
 
 </script>
 
@@ -35,7 +13,7 @@
         {#each tabuleiro as linha}
             <tr>
                 {#each linha as item}
-                    <td style="background-color: {item ? corPreta : corBranca};"></td>
+                    <td style="background-color: {item ? corEscura : corClara};"></td>
                 {/each}
             </tr>  
         {/each}
