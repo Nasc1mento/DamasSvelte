@@ -80,14 +80,28 @@ button:focus-visible {
   }
 }
 
-.tabuleiro td{
-  padding: 35px 35px;
-}
-
-.pecas td{
-  padding: 35px 30px 35px 35px;
-  border-radius: 100%;
+.tabuleiro td {
+  padding: 35px;
+  border: 2px solid;
 }
 
 
+.pecas td {
+  padding: 35px;
+  border: 2px solid;
+
+}
+
+.tabuleiro{
+  position: absolute;
+}
+
+.pecas{
+  position: relative;
+}
+
+
+.ocupado{
+  border-radius: 50%;
+}
 

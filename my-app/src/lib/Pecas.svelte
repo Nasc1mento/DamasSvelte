@@ -1,21 +1,51 @@
 <script>
-    import {Item, montadora} from './Fabrica.svelte';
 
+    import {mostrar} from "../routes/Jogar.svelte";
 
-   let corPadrao = 'black';
+    class Tabuleiro{
+        constructor (altura, largura){
+        this.altura = altura;
+        this.largura = largura;
+        }
+    }
+    
+    const propriedadesTabuleiro = new Tabuleiro (8, 8);
 
-    const quantidadePecas = new Item (3, 8);
-    let pecas = montadora (quantidadePecas);
+    let corJogador1 = 'blue'
+    let corJogador2 = 'red';
+    let pecas;
+    let tabuleiro = montarTabuleiro (propriedadesTabuleiro);
+
+    export function montarTabuleiro (propriedadesTabuleiro){
+
+        pecas = Array(propriedadesTabuleiro.altura).fill().map(()=>Array(propriedadesTabuleiro.largura).fill());
+
+        for (let i = 0; i < propriedadesTabuleiro.altura; i++){
+            for (let j = 0; j < propriedadesTabuleiro.largura; j++){
+                if ((i == 0 && j % 2 == 0) || (i == 1 && j % 2 == 1)){
+                    pecas[i][j] = corJogador1;
+                    continue;
+                }
+                if ((i == 6 && j % 2 == 0) || (i == 7 && j % 2 == 1)){
+                    pecas[i][j] = corJogador2;
+                    continue;
+                }
+
+                pecas[i][j] = null;
+            }
+        }
+        return pecas;
+    }
+
 
 </script>
 
-<table class="pecas">
-        {#each pecas as linha}
-            <tr>
-                {#each linha as item}
-                    <td style="background-color: {item ? corPadrao : ''};"></td>
-                {/each}
-            </tr>  
-        {/each}
+<table>
+    {#each tabuleiro as linha, i}
+        <tr>
+            {#each linha as item, j}
+                <td style="background-color: {item};" class="{item != null ? 'ocupado' : 'desocupado'}" on:click={()=>mostrar(i, j, pecas, item)}></td>
+            {/each}
+        </tr>  
+    {/each}
 </table>
-   
