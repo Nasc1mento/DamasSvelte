@@ -14,9 +14,8 @@
       <Link to="ajuda">Ajuda</Link>
     </nav>
     <div>
-      <Route path="/" component="{Jogar}" />
-      <Route path="sobre" component="{Sobre}" />
-      <Route path="ajuda" component="{Ajuda}" />
+      <Route path="sobre"> <Sobre /></Route>
+      <Route path="ajuda"> <Ajuda /></Route>
       <Route path="/"><Jogar /></Route>
     </div>
   </Router>

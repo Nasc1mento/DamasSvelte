@@ -80,6 +80,6 @@ button:focus-visible {
   }
 }
 
-td {
+.tabuleiro td {
   padding: 25px 25px;
 }

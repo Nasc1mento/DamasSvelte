@@ -7,7 +7,7 @@
         }
     }
 
-    let corbranca = 'white';
+    let corBranca = 'white';
     let corPreta = 'black';
 
     const propriedadesTabuleiro = new Tabuleiro (8, 8);
@@ -31,11 +31,11 @@
 
 </script>
 
-<table style="postion:absolute">
+<table class="tabuleiro">
         {#each tabuleiro as linha}
-            <tr style="postion:absolute">
+            <tr>
                 {#each linha as item}
-                    <td style="background-color: {item ? corPreta : corbranca};"></td>
+                    <td style="background-color: {item ? corPreta : corBranca};"></td>
                 {/each}
             </tr>  
         {/each}
