@@ -1,16 +1,11 @@
-<script context="module">
+<script>
 
     import Tabuleiro  from "../lib/Tabuleiro.svelte";
-    import Pecas, {tabuleiro} from '../lib/Pecas.svelte';
+    import Pecas from '../lib/Pecas.svelte';
 
 
-    export function mostrar (x, y){
+    
 
-
-        console.log(tabuleiro[x][y]);
-
-            
-    }
 </script>
 
 
