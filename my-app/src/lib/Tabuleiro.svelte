@@ -14,7 +14,7 @@
 
     let tabuleiro = montarTabuleiro (propriedadesTabuleiro);
 
-    export function montarTabuleiro (propriedadesTabuleiro){
+    function montarTabuleiro (propriedadesTabuleiro){
     
         let item = Array(propriedadesTabuleiro.altura).fill().map(()=>Array(propriedadesTabuleiro.largura).fill());
 

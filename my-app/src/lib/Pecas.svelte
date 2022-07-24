@@ -1,4 +1,4 @@
-<script>
+<script context="module">
 
     import {mostrar} from "../routes/Jogar.svelte";
 
@@ -14,7 +14,7 @@
     let corJogador1 = 'blue'
     let corJogador2 = 'red';
     let pecas;
-    let tabuleiro = montarTabuleiro (propriedadesTabuleiro);
+    export let tabuleiro = montarTabuleiro (propriedadesTabuleiro);
 
     export function montarTabuleiro (propriedadesTabuleiro){
 
@@ -44,7 +44,7 @@
     {#each tabuleiro as linha, i}
         <tr>
             {#each linha as item, j}
-                <td style="background-color: {item};" class="{item != null ? 'ocupado' : 'desocupado'}" on:click={()=>mostrar(i, j, pecas, item)}></td>
+                <td style="background-color: {item};" class="{item != null ? 'ocupado' : 'desocupado'}" on:click={()=>mostrar(i, j)}></td>
             {/each}
         </tr>  
     {/each}
