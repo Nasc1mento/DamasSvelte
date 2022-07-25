@@ -1,5 +1,6 @@
 <script>
 
+/* --------------- Criação de peças* ------------------ */
 
     class Tabuleiro{
         constructor (altura, largura){
@@ -12,12 +13,11 @@
 
     let corJogador1 = 'blue'
     let corJogador2 = 'red';
-    let pecas;
     let tabuleiro = montarTabuleiro (propriedadesTabuleiro);
 
     function montarTabuleiro (propriedadesTabuleiro){
 
-        pecas = Array(propriedadesTabuleiro.altura).fill().map(()=>Array(propriedadesTabuleiro.largura).fill());
+        let pecas = Array(propriedadesTabuleiro.altura).fill().map(()=>Array(propriedadesTabuleiro.largura).fill());
 
         for (let i = 0; i < propriedadesTabuleiro.altura; i++){
             for (let j = 0; j < propriedadesTabuleiro.largura; j++){
@@ -41,19 +41,23 @@
     let a,b, pecaEscolhida;
 
     function mover (x, y){
+        
        if (pecaEscolhida == null){
-        a = x
-        b = y
-        pecaEscolhida = tabuleiro[a][b]
-        return
+            a = x
+            b = y
+            pecaEscolhida = tabuleiro[a][b]
+            return;
        }
 
+       if ((x == a + 1 || x == a -1) && (y == b + 1 || y == b -1) && tabuleiro[x][y] == null){
         tabuleiro[a][b] = null;
         tabuleiro[x][y] = pecaEscolhida;
-
         pecaEscolhida = null
         a = null
         b = null
+       }
+
+       
 
         
     }
