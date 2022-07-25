@@ -41,6 +41,14 @@
     let a, b, pecaEscolhida;
 
     function escolher (x, y) {
+
+        // Cancelar escolha da peça - clicando na mesma 2 vezes
+        if (x == a && y == b){
+            resetar();
+            return;
+        }
+
+        // Guardando a peça escolhida
         if (pecaEscolhida == null) {
             a = x
             b = y
@@ -48,47 +56,83 @@
             return;
         }
 
+        // 
        if (tabuleiro[a][b] == Jogador2) {
+        if (tabuleiro[x][y] == null){
             if ((x == a -1) && (y == b + 1 || y == b -1) ){
-                if (tabuleiro[x][y] == null){
                     mover(x, y);
-                    resetar();
-                    return; 
-                }
-                
-            }
-            comer(x, y);
-            return;
-        }
-
-       if (tabuleiro[a][b] == Jogador1) {
-            if ((x == a + 1) && (y == b + 1 || y == b -1)){
-                if (tabuleiro[x][y] == null){
-                    mover(x, y);
-                    resetar(); 
                     return; 
                 }
             }
 
-            comer(x, y);
-            return;
+          comer(x, y, Jogador1);
+        // 
+        } else {
+                if (tabuleiro[x][y] == null){
+                    if ((x == a + 1) && (y == b + 1 || y == b -1)){
+                        mover(x, y);
+                        return; 
+                    }  
+                }
+                comer(x, y, Jogador2);
+            }
         }
-      
-    }
 
-    function comer (x, y,) {
-        
-    }
-
+            
+    
+    // Resetar peça escolhida depois do movimento
     function resetar () {
         a = null;
         b = null;
         pecaEscolhida = null;
     }
 
+    // Mover peça
     function mover (x ,y) {
         tabuleiro[a][b] = null;
         tabuleiro[x][y] = pecaEscolhida;
+        resetar(); 
+    }
+
+    // Peças normais comendo peças normais
+    function comer (x, y, alvo) {
+        if (x == a - 2 && y == b - 2){
+            console.log('entrei1')
+            if (tabuleiro[a-1][b-1] == alvo){
+                tabuleiro[a-1][b-1] = null;
+                mover(x, y);
+                return;
+            }
+        }
+
+        if (x == a + 2 && y == b - 2){
+            console.log('entrei2')
+            if (tabuleiro[a+1][b-1] == alvo){
+ 
+
+                tabuleiro[a+1][b-1] = null;
+                mover(x, y);
+                return;
+            }
+        }
+
+        if (x == a - 2 && y == b + 2){
+            console.log('entrei3')
+            if (tabuleiro[a-1][b+1] == alvo){
+            
+                tabuleiro[a-1][b+1] = null;
+                mover(x, y);
+                return;
+            }
+        }
+
+        if (x == a + 2 && y == b + 2){
+            if (tabuleiro[a+1][b+1] == alvo){
+            
+                tabuleiro[a+1][b+1] = null;
+                mover(x, y);
+            }
+        }
     }
 
 </script>
