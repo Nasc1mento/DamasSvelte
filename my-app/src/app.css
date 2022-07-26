@@ -105,3 +105,6 @@ button:focus-visible {
   border-radius: 50%;
 }
 
+.ocupado:hover{
+  border: lavender;
+}

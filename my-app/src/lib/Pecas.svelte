@@ -47,20 +47,16 @@
 
     function escolher (x, y) {
 
-        // Cancelar escolha da peça - clicando na mesma 2 vezes
-        if (x == a && y == b){
-            resetar();
-            return;
-        }
 
         // Guardando a peça escolhida
-        if (pecaEscolhida == null) {
-            if(tabuleiro[x][y])
-            a = x
-            b = y
-            pecaEscolhida = tabuleiro[a][b]
-            return;
-        }
+            if(tabuleiro[x][y]){
+                a = x
+                b = y
+                pecaEscolhida = tabuleiro[a][b]
+                return; 
+            }
+            
+        
 
         // 
        if ((tabuleiro[a][b] == Jogador2 || tabuleiro[a][b] == damaJogador2) && (vezJogador2)) {
