@@ -1,5 +1,5 @@
 <script>
-
+    import { corEscura } from "./Tabuleiro.svelte";
 /* --------------- Criação de peças* ------------------ */
 
     class Tabuleiro{
@@ -55,11 +55,31 @@
                 pecaEscolhida = tabuleiro[a][b]
                 return; 
             }
-            
-        
+      
+            if ((tabuleiro[a][b] == damaJogador2) && (vezJogador2)) {
+                if (tabuleiro[x][y] == null){
+                        moverDamaDirBaixoEsqCima(x, y);
+                        moverDamaEsqCimaDirBaixo(x, y);
+                        moverDamaEsqBaixoDirCima(x, y);
+                        moverDamaDirCimaEsqBaixo(x, y);
+                        return; 
+                }
+            }else{
+                if ((tabuleiro[a][b] == damaJogador1) && (vezJogador2)) {
+                    if (tabuleiro[x][y] == null){
+                            moverDamaDirBaixoEsqCima(x, y);
+                            moverDamaEsqCimaDirBaixo(x, y);
+                            moverDamaEsqBaixoDirCima(x, y);
+                            moverDamaDirCimaEsqBaixo(x, y);
+                            return; 
+                    }
+                }     
+            }    
 
-        // 
-       if ((tabuleiro[a][b] == Jogador2 || tabuleiro[a][b] == damaJogador2) && (vezJogador2)) {
+             
+
+
+      if ((tabuleiro[a][b] == Jogador2) && (vezJogador2)) {
             if (tabuleiro[x][y] == null){
                 if ((x == a -1) && (y == b + 1 || y == b -1) ){
                     mover(x, y);
@@ -74,7 +94,7 @@
         // 
         } else {
             if (vezJogador1){
-               if (tabuleiro[x][y] == null || tabuleiro[a][b] == damaJogador1){
+               if (tabuleiro[x][y] == null && tabuleiro[a][b] == Jogador1){
                     if ((x == a + 1) && (y == b + 1 || y == b -1)){
                         mover(x, y);
                         return; 
@@ -112,11 +132,13 @@
 
     // Mover peça
     function mover (x ,y) {
-        tabuleiro[a][b] = null;
-        tabuleiro[x][y] = pecaEscolhida;
-        virarDama(x, y);
-        resetar(); 
-        mudarVez();
+
+            tabuleiro[a][b] = null;
+            tabuleiro[x][y] = pecaEscolhida;
+            virarDama(x, y);
+            resetar(); 
+            mudarVez();
+        
     }
 
     // Peças normais comendo peças normais
@@ -163,6 +185,85 @@
         vezJogador1= !vezJogador1;
         vezJogador2 = !vezJogador2;
     }
+    
+    function moverDamaEsqCimaDirBaixo (x, y) {
+        
+        let i = 1;
+        let j = 1;
+
+        while  (i <= 7 && j <=7) {
+            if (a < x && b < y){
+                if (a+i == x && b+j == y){
+                    mover(x, y);
+                    return;
+                }
+            }
+
+            i++;
+            j++;
+
+        }
+
+    }
+    
+    function moverDamaDirBaixoEsqCima (x, y) {
+
+        let i = 1;
+        let j = 1;
+
+        while  (i <= 7 && j <=7) {
+
+            if (a > x && b > y){
+                if (a-i == x && b-j == y){
+                    mover(x, y);
+                    return
+                }
+            }
+
+            i++;
+            j++;
+        }
+        
+    }
+
+
+    function moverDamaEsqBaixoDirCima (x, y) {
+        let i = 1;
+        let j = 1;
+
+        while  (i <= 7 && j <=7) {
+  
+            if (a < x && b > y){
+                if (a+i == x && b-j == y){
+                    mover(x, y);
+                    return
+                }
+            }
+
+            i++;
+            j++;
+        }
+    }
+
+    function moverDamaDirCimaEsqBaixo (x, y) {
+        let i = 1;
+        let j = 1;
+
+        while  (i <= 7 && j <=7) {
+  
+            if (a > x && b < y){
+                if (a-i == x && b+j == y){
+                    mover(x, y);
+                    return
+                }
+            }
+
+            i++;
+            j++;
+        }
+    }
+    
+    
 
 </script>
 

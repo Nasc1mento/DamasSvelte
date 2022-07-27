@@ -10,7 +10,7 @@
     const propriedadesTabuleiro = new Tabuleiro (8, 8);
 
     let corClara = 'rgba(98, 49, 11, 1)'
-    let corEscura = 'rgba(237, 180, 136, 1)';
+    export let corEscura = 'rgba(237, 180, 136, 1)';
 
     let tabuleiro = montarTabuleiro (propriedadesTabuleiro);
 
