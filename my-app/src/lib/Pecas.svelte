@@ -1,5 +1,5 @@
 <script>
-    import { corEscura } from "./Tabuleiro.svelte";
+    
 /* --------------- Criação de peças* ------------------ */
 
     class Tabuleiro{
@@ -38,9 +38,9 @@
         return pecas;
     }
     
-/* --------------- Lógica do jogo* ------------------ */
+/* --------------- Movimentação ------------------ */
 
-    let a, b, pecaEscolhida;
+    let linhaPecaEscolhida, colunaPecaEscolhida, pecaEscolhida;
 
     let vezJogador2 = true;
     let vezJogador1 = false;
@@ -48,15 +48,15 @@
     function escolher (x, y) {
 
 
-        // Guardando a peça escolhida
+        // Guardando linhaPecaEscolhida peça escolhida
             if(tabuleiro[x][y]){
-                a = x
-                b = y
-                pecaEscolhida = tabuleiro[a][b]
+                linhaPecaEscolhida = x
+                colunaPecaEscolhida = y
+                pecaEscolhida = tabuleiro[linhaPecaEscolhida][colunaPecaEscolhida]
                 return; 
             }
       
-            if ((tabuleiro[a][b] == damaJogador2) && (vezJogador2)) {
+            if ((tabuleiro[linhaPecaEscolhida][colunaPecaEscolhida] == damaJogador2) && (vezJogador2)) {
                 if (tabuleiro[x][y] == null){
                         moverDamaDirBaixoEsqCima(x, y, Jogador1,damaJogador1,Jogador2);
                         moverDamaEsqCimaDirBaixo(x, y, Jogador1,damaJogador1,Jogador2);
@@ -65,7 +65,7 @@
                         return; 
                 }
             }else{
-                if ((tabuleiro[a][b] == damaJogador1) && (vezJogador1)) {
+                if ((tabuleiro[linhaPecaEscolhida][colunaPecaEscolhida] == damaJogador1) && (vezJogador1)) {
                     if (tabuleiro[x][y] == null){
 
                             moverDamaDirBaixoEsqCima(x, y, Jogador2,damaJogador2,Jogador1);
@@ -80,9 +80,9 @@
              
 
 
-      if ((tabuleiro[a][b] == Jogador2) && (vezJogador2)) {
+      if ((tabuleiro[linhaPecaEscolhida][colunaPecaEscolhida] == Jogador2) && (vezJogador2)) {
             if (tabuleiro[x][y] == null){
-                if ((x == a -1) && (y == b + 1 || y == b -1) ){
+                if ((x == linhaPecaEscolhida -1) && (y == colunaPecaEscolhida + 1 || y == colunaPecaEscolhida -1) ){
                     mover(x, y);
                     return; 
                 }
@@ -94,9 +94,9 @@
           comer(x, y, damaJogador1);
         // 
         } 
-            if ((vezJogador1) && (tabuleiro[a][b] == Jogador1)){
+            if ((vezJogador1) && (tabuleiro[linhaPecaEscolhida][colunaPecaEscolhida] == Jogador1)){
                if (tabuleiro[x][y] == null){
-                    if ((x == a + 1) && (y == b + 1 || y == b -1)){
+                    if ((x == linhaPecaEscolhida + 1) && (y == colunaPecaEscolhida + 1 || y == colunaPecaEscolhida -1)){
                         mover(x, y);
                         return; 
                     }  
@@ -126,15 +126,15 @@
     
     // Resetar peça escolhida depois do movimento
     function resetar () {
-        a = null;
-        b = null;
+        linhaPecaEscolhida = null;
+        colunaPecaEscolhida = null;
         pecaEscolhida = null;
     }
 
     // Mover peça
     function mover (x ,y) {
 
-            tabuleiro[a][b] = null;
+            tabuleiro[linhaPecaEscolhida][colunaPecaEscolhida] = null;
             tabuleiro[x][y] = pecaEscolhida;
             virarDama(x, y);
             resetar(); 
@@ -144,38 +144,38 @@
 
     // Peças normais comendo peças normais
     function comer (x, y, alvo) {
-        if (x == a - 2 && y == b - 2){
+        if (x == linhaPecaEscolhida - 2 && y == colunaPecaEscolhida - 2){
             console.log('entrei1')
-            if (tabuleiro[a-1][b-1] == alvo){
-                tabuleiro[a-1][b-1] = null;
+            if (tabuleiro[linhaPecaEscolhida-1][colunaPecaEscolhida-1] == alvo){
+                tabuleiro[linhaPecaEscolhida-1][colunaPecaEscolhida-1] = null;
                 mover(x, y);
                 return;
             }
         }
 
-        if (x == a + 2 && y == b - 2){
+        if (x == linhaPecaEscolhida + 2 && y == colunaPecaEscolhida - 2){
             console.log('entrei2')
-            if (tabuleiro[a+1][b-1] == alvo){
-                tabuleiro[a+1][b-1] = null;
+            if (tabuleiro[linhaPecaEscolhida+1][colunaPecaEscolhida-1] == alvo){
+                tabuleiro[linhaPecaEscolhida+1][colunaPecaEscolhida-1] = null;
                 mover(x, y);
                 return;
             }
         }
 
-        if (x == a - 2 && y == b + 2){
+        if (x == linhaPecaEscolhida - 2 && y == colunaPecaEscolhida + 2){
             console.log('entrei3')
-            if (tabuleiro[a-1][b+1] == alvo){
+            if (tabuleiro[linhaPecaEscolhida-1][colunaPecaEscolhida+1] == alvo){
             
-                tabuleiro[a-1][b+1] = null;
+                tabuleiro[linhaPecaEscolhida-1][colunaPecaEscolhida+1] = null;
                 mover(x, y);
                 return;
             }
         }
 
-        if (x == a + 2 && y == b + 2){
-            if (tabuleiro[a+1][b+1] == alvo){
+        if (x == linhaPecaEscolhida + 2 && y == colunaPecaEscolhida + 2){
+            if (tabuleiro[linhaPecaEscolhida+1][colunaPecaEscolhida+1] == alvo){
             
-                tabuleiro[a+1][b+1] = null;
+                tabuleiro[linhaPecaEscolhida+1][colunaPecaEscolhida+1] = null;
                 mover(x, y);
                 return;
             }
@@ -197,9 +197,9 @@
         let colunaInimigo;
 
         while  (i <= 7 && j <= 7) {
-            if (a < x && b < y){
+            if (linhaPecaEscolhida < x && colunaPecaEscolhida < y){
                 
-                if (tabuleiro[a+i][b+j] == aliado) {
+                if (tabuleiro[linhaPecaEscolhida+i][colunaPecaEscolhida+j] == aliado) {
                     if (aliados == 1){
                         return;
                     }
@@ -207,19 +207,19 @@
                     
                 }
 
-                if (tabuleiro[a+i][b+j] == inimigo || tabuleiro[a+i][b+j] == damaInimigo) {
+                if (tabuleiro[linhaPecaEscolhida+i][colunaPecaEscolhida+j] == inimigo || tabuleiro[linhaPecaEscolhida+i][colunaPecaEscolhida+j] == damaInimigo) {
                     if (inimigos == 1) {
                         return;
                     }
                     inimigos++
-                    linhaInimigo = a+i;
-                    colunaInimigo = b + j;
+                    linhaInimigo = linhaPecaEscolhida+i;
+                    colunaInimigo = colunaPecaEscolhida + j;
                     
                 }
 
 
             if (aliados < 1 && inimigos <= 1) {
-                if (a+i == x && b+j == y){
+                if (linhaPecaEscolhida+i == x && colunaPecaEscolhida+j == y){
                    mover(x, y);
                    tabuleiro[linhaInimigo][colunaInimigo] = null;
                    console.log([aliados,inimigos])
@@ -249,25 +249,25 @@
 
         while  (i <= 7 && j <=7) {
 
-            if (a > x && b > y){
-                if (tabuleiro[a-i][b-j] == aliado) {
+            if (linhaPecaEscolhida > x && colunaPecaEscolhida > y){
+                if (tabuleiro[linhaPecaEscolhida-i][colunaPecaEscolhida-j] == aliado) {
                     if (aliados == 1) {
                         return;
                     }
                     aliados++
                 }
 
-                if (tabuleiro[a-i][b-j] == inimigo || tabuleiro[a-i][b-j] == damaInimigo) {
+                if (tabuleiro[linhaPecaEscolhida-i][colunaPecaEscolhida-j] == inimigo || tabuleiro[linhaPecaEscolhida-i][colunaPecaEscolhida-j] == damaInimigo) {
                     if (inimigos == 1) {
                         return;
                     }
                     inimigos++
-                    linhaInimigo = a-i;
-                    colunaInimigo = b - j;
+                    linhaInimigo = linhaPecaEscolhida-i;
+                    colunaInimigo = colunaPecaEscolhida - j;
                 }
 
                 if (aliados < 1 && inimigos <= 1) {
-                   if (a-i == x && b-j == y){
+                   if (linhaPecaEscolhida-i == x && colunaPecaEscolhida-j == y){
                         mover(x, y);
                         tabuleiro[linhaInimigo][colunaInimigo] = null;
                         
@@ -294,25 +294,25 @@
 
         while  (i <= 7 && j <=7) {
   
-            if (a < x && b > y){
-                if (tabuleiro[a+i][b-j] == aliado) {
+            if (linhaPecaEscolhida < x && colunaPecaEscolhida > y){
+                if (tabuleiro[linhaPecaEscolhida+i][colunaPecaEscolhida-j] == aliado) {
                     if (aliados == 1){
                         return;
                     }
                     aliados++
                 }
 
-                if (tabuleiro[a+i][b-j] == inimigo || tabuleiro[a+i][b-j] == damaInimigo) {
+                if (tabuleiro[linhaPecaEscolhida+i][colunaPecaEscolhida-j] == inimigo || tabuleiro[linhaPecaEscolhida+i][colunaPecaEscolhida-j] == damaInimigo) {
                     if (inimigos == 1) {
                         return;
                     }
                     inimigos++
-                    linhaInimigo = a+i;
-                    colunaInimigo = b - j;
+                    linhaInimigo = linhaPecaEscolhida+i;
+                    colunaInimigo = colunaPecaEscolhida - j;
                 }
 
                 if (aliados < 1 && inimigos <= 1) {
-                    if (a+i == x && b-j == y){
+                    if (linhaPecaEscolhida+i == x && colunaPecaEscolhida-j == y){
                         mover(x, y);  
                         tabuleiro[linhaInimigo][colunaInimigo] = null;
                    
@@ -337,25 +337,25 @@
 
         while  (i <= 7 && j <=7) {
   
-            if (a > x && b < y){
-                if (tabuleiro[a-i][b+j] == aliado) {
+            if (linhaPecaEscolhida > x && colunaPecaEscolhida < y){
+                if (tabuleiro[linhaPecaEscolhida-i][colunaPecaEscolhida+j] == aliado) {
                     if (aliados == 1) {
                         return;
                     }
                     aliados++
                 }
 
-                if (tabuleiro[a-i][b+j] == inimigo || tabuleiro[a-i][b+j] == damaInimigo) {
+                if (tabuleiro[linhaPecaEscolhida-i][colunaPecaEscolhida+j] == inimigo || tabuleiro[linhaPecaEscolhida-i][colunaPecaEscolhida+j] == damaInimigo) {
                     if (inimigos == 1) {
                         return;
                     }
                     inimigos++
-                    linhaInimigo = a-i;
-                    colunaInimigo = b + j;
+                    linhaInimigo = linhaPecaEscolhida-i;
+                    colunaInimigo = colunaPecaEscolhida + j;
                 }
 
                 if (aliados < 1 && inimigos <= 1) {
-                    if (a-i == x && b+j == y){
+                    if (linhaPecaEscolhida-i == x && colunaPecaEscolhida+j == y){
                         mover(x, y);
                         tabuleiro[linhaInimigo][colunaInimigo] = null;
                     
