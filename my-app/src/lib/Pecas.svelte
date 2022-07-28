@@ -41,18 +41,20 @@
 /* --------------- Movimentação ------------------ */
 
     let linhaPecaEscolhida, colunaPecaEscolhida, pecaEscolhida;
-
     let vezJogador2 = true;
     let vezJogador1 = false;
+    let comidasJogador1 = 0;
+    let comidasJogador2 = 0;
+
+    
 
     function escolher (x, y) {
 
-
         // Guardando linhaPecaEscolhida peça escolhida
             if(tabuleiro[x][y]){
-                linhaPecaEscolhida = x
-                colunaPecaEscolhida = y
-                pecaEscolhida = tabuleiro[linhaPecaEscolhida][colunaPecaEscolhida]
+                linhaPecaEscolhida = x;
+                colunaPecaEscolhida = y;
+                pecaEscolhida = tabuleiro[linhaPecaEscolhida][colunaPecaEscolhida];
                 return; 
             }
       
@@ -144,42 +146,53 @@
 
     // Peças normais comendo peças normais
     function comer (x, y, alvo) {
-        if (x == linhaPecaEscolhida - 2 && y == colunaPecaEscolhida - 2){
-            console.log('entrei1')
-            if (tabuleiro[linhaPecaEscolhida-1][colunaPecaEscolhida-1] == alvo){
-                tabuleiro[linhaPecaEscolhida-1][colunaPecaEscolhida-1] = null;
-                mover(x, y);
-                return;
-            }
-        }
 
-        if (x == linhaPecaEscolhida + 2 && y == colunaPecaEscolhida - 2){
-            console.log('entrei2')
-            if (tabuleiro[linhaPecaEscolhida+1][colunaPecaEscolhida-1] == alvo){
-                tabuleiro[linhaPecaEscolhida+1][colunaPecaEscolhida-1] = null;
-                mover(x, y);
-                return;
-            }
-        }
-
-        if (x == linhaPecaEscolhida - 2 && y == colunaPecaEscolhida + 2){
-            console.log('entrei3')
-            if (tabuleiro[linhaPecaEscolhida-1][colunaPecaEscolhida+1] == alvo){
+       if (tabuleiro[linhaPecaEscolhida][colunaPecaEscolhida] == Jogador2){
             
-                tabuleiro[linhaPecaEscolhida-1][colunaPecaEscolhida+1] = null;
-                mover(x, y);
-                return;
-            }
+                if (x == linhaPecaEscolhida - 2 && y == colunaPecaEscolhida - 2){
+                    if (tabuleiro[linhaPecaEscolhida-1][colunaPecaEscolhida-1] == alvo){
+                        tabuleiro[linhaPecaEscolhida-1][colunaPecaEscolhida-1] = null;
+                        mover(x, y);
+                        comidasJogador2++;
+                        ganhador();
+                        return;
+                    }
+                }
+
+               if (x == linhaPecaEscolhida - 2 && y == colunaPecaEscolhida + 2){
+                    if (tabuleiro[linhaPecaEscolhida-1][colunaPecaEscolhida+1] == alvo){
+                        tabuleiro[linhaPecaEscolhida-1][colunaPecaEscolhida+1] = null;
+                        mover(x, y);
+                        comidasJogador2++;
+                        ganhador();
+                        return;
+                    }
+                } 
         }
 
-        if (x == linhaPecaEscolhida + 2 && y == colunaPecaEscolhida + 2){
-            if (tabuleiro[linhaPecaEscolhida+1][colunaPecaEscolhida+1] == alvo){
-            
-                tabuleiro[linhaPecaEscolhida+1][colunaPecaEscolhida+1] = null;
-                mover(x, y);
-                return;
+       if (tabuleiro[linhaPecaEscolhida][colunaPecaEscolhida] == Jogador1){
+          if (x == linhaPecaEscolhida + 2 && y == colunaPecaEscolhida - 2){
+                if (tabuleiro[linhaPecaEscolhida+1][colunaPecaEscolhida-1] == alvo){
+                    tabuleiro[linhaPecaEscolhida+1][colunaPecaEscolhida-1] = null;
+                    mover(x, y);
+                    comidasJogador1++;
+                    ganhador();
+                    return;
+                }
+            }  
+
+                if (x == linhaPecaEscolhida + 2 && y == colunaPecaEscolhida + 2){
+                    if (tabuleiro[linhaPecaEscolhida+1][colunaPecaEscolhida+1] == alvo){
+                        tabuleiro[linhaPecaEscolhida+1][colunaPecaEscolhida+1] = null;
+                        mover(x, y);
+                        comidasJogador1++;
+                        ganhador();
+                        return;
+                    }
             }
-        }
+        }      
+
+        
     }
 
     function mudarVez (){
@@ -222,8 +235,13 @@
                 if (linhaPecaEscolhida+i == x && colunaPecaEscolhida+j == y){
                    mover(x, y);
                    tabuleiro[linhaInimigo][colunaInimigo] = null;
-                   console.log([aliados,inimigos])
-
+                    if (tabuleiro[x][y] == damaJogador1){
+                        comidasJogador1++
+                        ganhador();
+                    }else if (tabuleiro[x][y] == damaJogador2) {
+                        comidasJogador2++
+                        ganhador();
+                    }
                     return; 
                 }
             }
@@ -270,7 +288,6 @@
                    if (linhaPecaEscolhida-i == x && colunaPecaEscolhida-j == y){
                         mover(x, y);
                         tabuleiro[linhaInimigo][colunaInimigo] = null;
-                        
                         return;
                     } 
                 }
@@ -306,7 +323,7 @@
                     if (inimigos == 1) {
                         return;
                     }
-                    inimigos++
+                    inimigos++;
                     linhaInimigo = linhaPecaEscolhida+i;
                     colunaInimigo = colunaPecaEscolhida - j;
                 }
@@ -315,9 +332,8 @@
                     if (linhaPecaEscolhida+i == x && colunaPecaEscolhida-j == y){
                         mover(x, y);  
                         tabuleiro[linhaInimigo][colunaInimigo] = null;
-                   
-                    return
-                }
+                        return;
+                    }
                 }
                 
             }
@@ -342,7 +358,7 @@
                     if (aliados == 1) {
                         return;
                     }
-                    aliados++
+                    aliados++;
                 }
 
                 if (tabuleiro[linhaPecaEscolhida-i][colunaPecaEscolhida+j] == inimigo || tabuleiro[linhaPecaEscolhida-i][colunaPecaEscolhida+j] == damaInimigo) {
@@ -357,10 +373,9 @@
                 if (aliados < 1 && inimigos <= 1) {
                     if (linhaPecaEscolhida-i == x && colunaPecaEscolhida+j == y){
                         mover(x, y);
-                        tabuleiro[linhaInimigo][colunaInimigo] = null;
-                    
-                    return
-                }
+                        tabuleiro[linhaInimigo][colunaInimigo] = null;                 
+                        return;
+                    }
                 }
                 
             }
@@ -370,6 +385,20 @@
         }
     }
     
+    function ganhador () {
+        if (comidasJogador2 == 8) {
+            setInterval(() => {
+                alert("Reds venceu!!!");
+            }, 1000);
+        }
+
+        if (comidasJogador1 == 8) {
+            setInterval(() => {
+                alert("Blues venceu!!!");
+            }, 1000);
+        }
+    }
+   
     
 
 </script>
