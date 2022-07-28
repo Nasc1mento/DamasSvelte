@@ -58,19 +58,20 @@
       
             if ((tabuleiro[a][b] == damaJogador2) && (vezJogador2)) {
                 if (tabuleiro[x][y] == null){
-                        moverDamaDirBaixoEsqCima(x, y);
-                        moverDamaEsqCimaDirBaixo(x, y);
-                        moverDamaEsqBaixoDirCima(x, y);
-                        moverDamaDirCimaEsqBaixo(x, y);
+                        moverDamaDirBaixoEsqCima(x, y, Jogador1,damaJogador1,Jogador2);
+                        moverDamaEsqCimaDirBaixo(x, y, Jogador1,damaJogador1,Jogador2);
+                        moverDamaEsqBaixoDirCima(x, y, Jogador1,damaJogador1,Jogador2);
+                        moverDamaDirCimaEsqBaixo(x, y, Jogador1,damaJogador1,Jogador2);
                         return; 
                 }
             }else{
-                if ((tabuleiro[a][b] == damaJogador1) && (vezJogador2)) {
+                if ((tabuleiro[a][b] == damaJogador1) && (vezJogador1)) {
                     if (tabuleiro[x][y] == null){
-                            moverDamaDirBaixoEsqCima(x, y);
-                            moverDamaEsqCimaDirBaixo(x, y);
-                            moverDamaEsqBaixoDirCima(x, y);
-                            moverDamaDirCimaEsqBaixo(x, y);
+
+                            moverDamaDirBaixoEsqCima(x, y, Jogador2,damaJogador2,Jogador1);
+                            moverDamaEsqCimaDirBaixo(x, y, Jogador2,damaJogador2,Jogador1);
+                            moverDamaEsqBaixoDirCima(x, y, Jogador2,damaJogador2,Jogador1);
+                            moverDamaDirCimaEsqBaixo(x, y, Jogador2,damaJogador2,Jogador1);
                             return; 
                     }
                 }     
@@ -92,9 +93,9 @@
           comer(x, y, Jogador1);
           comer(x, y, damaJogador1);
         // 
-        } else {
-            if (vezJogador1){
-               if (tabuleiro[x][y] == null && tabuleiro[a][b] == Jogador1){
+        } 
+            if ((vezJogador1) && (tabuleiro[a][b] == Jogador1)){
+               if (tabuleiro[x][y] == null){
                     if ((x == a + 1) && (y == b + 1 || y == b -1)){
                         mover(x, y);
                         return; 
@@ -104,7 +105,7 @@
                 comer(x, y, damaJogador2);
             }
                 
-        }
+        
     }
 
     function virarDama (x, y) {
@@ -186,17 +187,48 @@
         vezJogador2 = !vezJogador2;
     }
     
-    function moverDamaEsqCimaDirBaixo (x, y) {
+    function moverDamaEsqCimaDirBaixo (x, y, inimigo, damaInimigo, aliado) {
         
         let i = 1;
         let j = 1;
+        let aliados = 0;
+        let inimigos = 0;
+        let linhaInimigo;
+        let colunaInimigo;
 
-        while  (i <= 7 && j <=7) {
+        while  (i <= 7 && j <= 7) {
             if (a < x && b < y){
-                if (a+i == x && b+j == y){
-                    mover(x, y);
-                    return;
+                
+                if (tabuleiro[a+i][b+j] == aliado) {
+                    if (aliados == 1){
+                        return;
+                    }
+                    aliados++
+                    
                 }
+
+                if (tabuleiro[a+i][b+j] == inimigo || tabuleiro[a+i][b+j] == damaInimigo) {
+                    if (inimigos == 1) {
+                        return;
+                    }
+                    inimigos++
+                    linhaInimigo = a+i;
+                    colunaInimigo = b + j;
+                    
+                }
+
+
+            if (aliados < 1 && inimigos <= 1) {
+                if (a+i == x && b+j == y){
+                   mover(x, y);
+                   tabuleiro[linhaInimigo][colunaInimigo] = null;
+                   console.log([aliados,inimigos])
+
+                    return; 
+                }
+            }
+                
+                    
             }
 
             i++;
@@ -206,18 +238,43 @@
 
     }
     
-    function moverDamaDirBaixoEsqCima (x, y) {
+    function moverDamaDirBaixoEsqCima (x, y, inimigo, damaInimigo, aliado) {
 
         let i = 1;
         let j = 1;
+        let aliados = 0;
+        let inimigos = 0;
+        let linhaInimigo;
+        let colunaInimigo;
 
         while  (i <= 7 && j <=7) {
 
             if (a > x && b > y){
-                if (a-i == x && b-j == y){
-                    mover(x, y);
-                    return
+                if (tabuleiro[a-i][b-j] == aliado) {
+                    if (aliados == 1) {
+                        return;
+                    }
+                    aliados++
                 }
+
+                if (tabuleiro[a-i][b-j] == inimigo || tabuleiro[a-i][b-j] == damaInimigo) {
+                    if (inimigos == 1) {
+                        return;
+                    }
+                    inimigos++
+                    linhaInimigo = a-i;
+                    colunaInimigo = b - j;
+                }
+
+                if (aliados < 1 && inimigos <= 1) {
+                   if (a-i == x && b-j == y){
+                        mover(x, y);
+                        tabuleiro[linhaInimigo][colunaInimigo] = null;
+                        
+                        return;
+                    } 
+                }
+                
             }
 
             i++;
@@ -227,17 +284,42 @@
     }
 
 
-    function moverDamaEsqBaixoDirCima (x, y) {
+    function moverDamaEsqBaixoDirCima (x, y, inimigo, damaInimigo, aliado) {
         let i = 1;
         let j = 1;
+        let aliados = 0;
+        let inimigos = 0;
+        let linhaInimigo;
+        let colunaInimigo;
 
         while  (i <= 7 && j <=7) {
   
             if (a < x && b > y){
-                if (a+i == x && b-j == y){
-                    mover(x, y);
+                if (tabuleiro[a+i][b-j] == aliado) {
+                    if (aliados == 1){
+                        return;
+                    }
+                    aliados++
+                }
+
+                if (tabuleiro[a+i][b-j] == inimigo || tabuleiro[a+i][b-j] == damaInimigo) {
+                    if (inimigos == 1) {
+                        return;
+                    }
+                    inimigos++
+                    linhaInimigo = a+i;
+                    colunaInimigo = b - j;
+                }
+
+                if (aliados < 1 && inimigos <= 1) {
+                    if (a+i == x && b-j == y){
+                        mover(x, y);  
+                        tabuleiro[linhaInimigo][colunaInimigo] = null;
+                   
                     return
                 }
+                }
+                
             }
 
             i++;
@@ -245,17 +327,42 @@
         }
     }
 
-    function moverDamaDirCimaEsqBaixo (x, y) {
+    function moverDamaDirCimaEsqBaixo (x, y, inimigo, damaInimigo, aliado) {
         let i = 1;
         let j = 1;
+        let aliados = 0;
+        let inimigos = 0;
+        let linhaInimigo;
+        let colunaInimigo;
 
         while  (i <= 7 && j <=7) {
   
             if (a > x && b < y){
-                if (a-i == x && b+j == y){
-                    mover(x, y);
+                if (tabuleiro[a-i][b+j] == aliado) {
+                    if (aliados == 1) {
+                        return;
+                    }
+                    aliados++
+                }
+
+                if (tabuleiro[a-i][b+j] == inimigo || tabuleiro[a-i][b+j] == damaInimigo) {
+                    if (inimigos == 1) {
+                        return;
+                    }
+                    inimigos++
+                    linhaInimigo = a-i;
+                    colunaInimigo = b + j;
+                }
+
+                if (aliados < 1 && inimigos <= 1) {
+                    if (a-i == x && b+j == y){
+                        mover(x, y);
+                        tabuleiro[linhaInimigo][colunaInimigo] = null;
+                    
                     return
                 }
+                }
+                
             }
 
             i++;
