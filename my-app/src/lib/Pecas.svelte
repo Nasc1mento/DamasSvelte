@@ -288,6 +288,13 @@
                    if (linhaPecaEscolhida-i == x && colunaPecaEscolhida-j == y){
                         mover(x, y);
                         tabuleiro[linhaInimigo][colunaInimigo] = null;
+                        if (tabuleiro[x][y] == damaJogador1){
+                            comidasJogador1++
+                            ganhador();
+                        }else if (tabuleiro[x][y] == damaJogador2) {
+                            comidasJogador2++
+                            ganhador();
+                        }
                         return;
                     } 
                 }
@@ -332,6 +339,13 @@
                     if (linhaPecaEscolhida+i == x && colunaPecaEscolhida-j == y){
                         mover(x, y);  
                         tabuleiro[linhaInimigo][colunaInimigo] = null;
+                        if (tabuleiro[x][y] == damaJogador1){
+                            comidasJogador1++
+                            ganhador();
+                        }else if (tabuleiro[x][y] == damaJogador2) {
+                            comidasJogador2++
+                            ganhador();
+                        }
                         return;
                     }
                 }
@@ -373,7 +387,14 @@
                 if (aliados < 1 && inimigos <= 1) {
                     if (linhaPecaEscolhida-i == x && colunaPecaEscolhida+j == y){
                         mover(x, y);
-                        tabuleiro[linhaInimigo][colunaInimigo] = null;                 
+                        tabuleiro[linhaInimigo][colunaInimigo] = null;
+                        if (tabuleiro[x][y] == damaJogador1){
+                            comidasJogador1++
+                            ganhador();
+                        }else if (tabuleiro[x][y] == damaJogador2) {
+                            comidasJogador2++
+                            ganhador();
+                        }                 
                         return;
                     }
                 }
@@ -386,17 +407,22 @@
     }
     
     function ganhador () {
+
         if (comidasJogador2 == 8) {
             setInterval(() => {
                 alert("Reds venceu!!!");
+                location.reload();
             }, 1000);
         }
 
         if (comidasJogador1 == 8) {
             setInterval(() => {
                 alert("Blues venceu!!!");
+                location.reload();
             }, 1000);
         }
+
+        
     }
    
     
