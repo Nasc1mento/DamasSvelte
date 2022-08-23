@@ -1,6 +1,6 @@
 # DamasSvelte
 
-### <a href="https://celebrated-caramel-fa7551.netlify.app/">Link do jogo</a>
+### <a href="https://damas-svelte-nasc1mento.netlify.app/">Link do jogo</a>
 
 ## Imagens
 
