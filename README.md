@@ -1,6 +1,8 @@
 # DamasSvelte
 
-### <a href="https://damas-svelte-nasc1mento.netlify.app/">Link do jogo</a>
+## Projeto pessoal de um jogo de Damas
+
+### <a href="https://damas-svelte-nasc1mento.netlify.app/">Clique aqui para testar</a>
 
 ## Imagens
 
