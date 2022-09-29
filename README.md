@@ -2,7 +2,7 @@
 
 ## Projeto pessoal de um jogo de Damas
 
-### <a href="https://damas-svelte-nasc1mento.netlify.app/">Clique aqui para testar</a>
+### <a href="https://damas-nasc1mento.netlify.app/">Clique aqui para testar</a>
 
 ## Imagens
 
